@@ -1,0 +1,28 @@
+{
+    "configurations": [
+        {
+            "name": "STM32",
+            "includePath": [
+                "${workspaceFolder}",
+                "${workspaceFolder}/Inc",
+                "${workspaceFolder}/Drivers",
+                "${workspaceFolder}/Drivers/CMSIS/Include",
+                "${workspaceFolder}/Drivers/CMSIS/Device/ST/STM32F0xx/Include",
+                "${workspaceFolder}/Drivers/STM32F0xx_HAL_Driver/Inc"
+            ],
+            "defines": [
+                "STM32F051x8",
+                "USE_FULL_LL_DRIVER"
+            ],
+            "intelliSenseMode": "gcc-x64",
+            "browse": {
+                "path": [
+                    "${workspaceRoot}"
+                ],
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "compilerPath": "/usr/bin/gcc"
+        }
+    ],
+    "version": 4
+}
