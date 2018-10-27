@@ -16,10 +16,17 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  
+
+  //GPIOC is a struct representing pointer to registers for GPIOC
+  //BSRR is a 32 bit register through which you can set/reset GPIO
+  //16 most significant bits set GPIO, 16 least significant bits reset GPIO
+  GPIOC->BSRR = 0x0f00;
+
   /* Infinite loop */
   while (1)
   {
+   
+
     
 
   }
