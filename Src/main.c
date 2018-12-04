@@ -17,17 +17,34 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
 
-  //GPIOC is a struct representing pointer to registers for GPIOC
-  //BSRR is a 32 bit register through which you can set/reset GPIO
-  //16 most significant bits set GPIO, 16 least significant bits reset GPIO
-  GPIOC->BSRR = 0x0f00;
+  //LL_APB1_GRP1_EnableClock(RCC_APB1ENR_TIM6EN);
+  const int DELAY_REQUIRED = 0xFFFFFFFF;
+  TIM6->SR = 0;
+  TIM6->PSC = 0xFF;
+  TIM6->ARR = DELAY_REQUIRED;
+  TIM6->CR1 |= TIM_CR1_CEN;
 
   /* Infinite loop */
   while (1)
   {
-   
+    //GPIOC is a struct representing pointer to registers for GPIOC
+    //BSRR is a 32 bit register through which you can set/reset GPIO
+    //16 most significant bits set GPIO, 16 least significant bits reset GPIO
+    GPIOC->BSRR = 0x0f00;
+    int long long volatile count = 0;
+    while(!(TIM6->SR & TIM_SR_UIF)){
+      count = count+1;
+    };
 
-    
+    GPIOC->BSRR = 0x0f000000;
+    TIM6->SR = 0;
+
+    while(!(TIM6->SR & TIM_SR_UIF)){
+      count = count+1;
+    };
+
+    TIM6->SR = 0;
+    TIM6->CNT = 0;
 
   }
   /* USER CODE END 3 */
@@ -39,7 +56,7 @@ static void LL_Init(void)
 
   LL_APB1_GRP2_EnableClock(LL_APB1_GRP2_PERIPH_SYSCFG);
   LL_APB1_GRP1_EnableClock(LL_APB1_GRP1_PERIPH_PWR);
-
+  LL_APB1_GRP1_EnableClock(RCC_APB1ENR_TIM6EN);
   /* System interrupt init*/
   /* SVC_IRQn interrupt configuration */
   NVIC_SetPriority(SVC_IRQn, 0);
